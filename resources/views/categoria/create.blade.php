@@ -38,6 +38,9 @@
                 </div>
                 <div class="col-12 text-center">
                     <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+                    <a href="{{route('categorias.index')}}">
+                        <button type="button" class="btn btn-info mt-3"> Regresar</button>
+                    </a>
                 </div>
         </form>
     </div>

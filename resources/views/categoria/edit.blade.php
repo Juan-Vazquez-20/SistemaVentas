@@ -36,8 +36,8 @@
                     <div class="col-12 text-center">
                         <button type="submit" class="btn btn-primary mt-3">Actualizar</button>
                         <button type="reset" class="btn btn-secondary mt-3">Reiniciar</button>
-                        <a href="{{route('categorias.create')}}">
-                            <button type="button" class="btn btn-therciary"> regresar</button>
+                        <a href="{{route('categorias.index')}}">
+                            <button type="button" class="btn btn-info mt-3"> Regresar</button>
                         </a>
                     </div>
             </form>
