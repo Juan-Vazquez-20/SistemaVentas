@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Producto;
+use App\Models\Caracteristica;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +15,7 @@ class Categoria extends Model
         return $this->belongsToMany(Producto::class)->withTimestamps();
     }
 
-    public function caracteristicas(){
+    public function caracteristica(){
         return $this->belongsTo(Caracteristica::class);
     }
 
