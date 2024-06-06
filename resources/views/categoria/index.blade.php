@@ -10,6 +10,8 @@
 @section('content')
     @if (session('success'))
     <script>
+
+        let messege = "{{ session('success')}}";
         const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
@@ -23,7 +25,7 @@
         });
         Toast.fire({
         icon: "success",
-        title: "Operacion exitosa"
+        title: messege
         });
     </script>
     @endif
@@ -68,6 +70,7 @@
                         <tr>
                             <th>Nombre</th>
                             <th>Descripcion</th>
+                            <th>Estado</th>
                             <th>Acciones</th>
                     </thead>
                     <tbody class="table-group-divider">
@@ -80,16 +83,50 @@
                                     {{$categoria->caracteristica->descripcion}}
                                 </td>
                                 <td>
+                                    @if ($categoria->caracteristica->estado == 1)
+                                        <span class="badge bg-success">Activo</span>
+                                    @else
+                                        <span class="badge bg-danger">Inactivo</span>
+                                    @endif
+
+                                </td>
+                                <td>
                                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
 
                                         <form action="{{ route('categorias.edit',['categoria'=>$categoria])}}" method="GET">
                                             @csrf
                                             <button type="submit" class="btn btn-warning">Editar</button>
                                         </form>
-                                            <button type="button" class="btn btn-danger">Eliminar</button>
+                                        @if($categoria->caracteristica->estado == 1)
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ConfirmModal-{{$categoria->id}}">Eliminar</button>
+                                        @else
+                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ConfirmModal-{{$categoria->id}}">Restaurar</button>
+                                        @endif
+                                            
                                       </div>
                                 </td>
                             </tr>
+                        <!-- Modal -->
+                        <div class="modal fade" id="ConfirmModal-{{$categoria->id}}" tabindex="-1" aria-labelledby="ConfirmModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="ConfirmModalLabel">Confirmar</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {{$categoria->caracteristica->estado == 1 ? '¿Estas seguro de eliminar este registro?' : '¿Estas seguro de restaurar este registro?'}}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                    <form action="{{ route('categorias.destroy',['categoria'=>$categoria->id])}}" method="POST">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary">Confirmar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                         @endforeach
                     </tbody>
                 </table>

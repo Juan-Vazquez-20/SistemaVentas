@@ -19,7 +19,7 @@ class categoriaController extends Controller
      */
     public function index()
     {
-        $categorias = Categoria::with('caracteristica')->get();
+        $categorias = Categoria::with('caracteristica')->latest()->get();
         /**d($categorias);**/
         return view('categoria.index',['categorias' => $categorias]);
     }
@@ -81,6 +81,16 @@ class categoriaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $meesege = '';
+        $categoria = Categoria::find($id);
+        if($categoria->caracteristica->estado == 0){
+            Caracteristica::where('id', $categoria->caracteristica->id)->update(['estado'=> 1]);
+            $meesege = 'Categoria Restaurada con éxito';
+        }
+        else{
+            Caracteristica::where('id', $categoria->caracteristica->id)->update(['estado'=> 0]);
+            $meesege = 'Categoria Eliminada con éxito';
+        }
+        return redirect()->route('categorias.index')->with('success', $meesege);
     }
 }
