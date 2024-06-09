@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Exception;
 
-use Illuminate\Http\Request;
 use App\Models\Marca;
 use App\Http\Requests\StoreMarcaRequest;
 use App\Http\Requests\UpdateMarcaRequest;
@@ -73,10 +72,6 @@ class marcaController extends Controller
         Caracteristica::where('id', $marca->caracteristica->id)->update($request->validated());
         return redirect()->route('marcas.index')->with('success', 'Marca actualizada con éxito');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $message = '';
