@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Exception;
 
 use App\Models\Marca;
+use App\Models\Caracteristica;
 use App\Http\Requests\StoreMarcaRequest;
 use App\Http\Requests\UpdateMarcaRequest;
-use App\Models\Caracteristica;
-use GuzzleHttp\Psr7\Message;
+USE App\Http\Controllers\UpdateMarcaRequet;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class marcaController extends Controller
@@ -18,8 +19,9 @@ class marcaController extends Controller
      */
     public function index()
     {
-        $marcas = Marca::with('marca')->latest()->get();
-        return view('marca.index', ['marcas' => $marcas]);
+        $marcas = Marca::with('caracteristica')->latest()->get();
+        /**d($Marcas);**/
+        return view('marca.index',['Marcas' => $marcas]);
     }
 
     /**
@@ -35,6 +37,7 @@ class marcaController extends Controller
      */
     public function store(StoreMarcaRequest $request)
     {
+
         try{
             DB::beginTransaction();
             $caracteristica = Caracteristica::create($request->validated());
@@ -45,6 +48,7 @@ class marcaController extends Controller
         }catch (Exception $e){
             DB::rollBack();
         }
+
         return redirect()->route('marcas.index')->with('success', 'Marca creada con éxito');
     }
 
@@ -63,27 +67,25 @@ class marcaController extends Controller
     {
         return view('marca.edit', ['marca' => $marca]);
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(updateMarcaRequest $request, Marca $marca)
+   
+    public function update(UpdateMarcaRequest $request, Marca $marca)
     {
         Caracteristica::where('id', $marca->caracteristica->id)->update($request->validated());
         return redirect()->route('marcas.index')->with('success', 'Marca actualizada con éxito');
     }
+
     public function destroy(string $id)
     {
-        $message = '';
+        $meesege = '';
         $marca = Marca::find($id);
         if($marca->caracteristica->estado == 0){
             Caracteristica::where('id', $marca->caracteristica->id)->update(['estado'=> 1]);
-            $meesege = 'marca Restaurada con éxito';
+            $meesege = 'Marca Restaurada con éxito';
         }
         else{
             Caracteristica::where('id', $marca->caracteristica->id)->update(['estado'=> 0]);
-            $meesege = 'marca Eliminada con éxito';
+            $meesege = 'Marca Eliminada con éxito';
         }
-        return redirect()->route('marcas.index')->with('success', $message);
+        return redirect()->route('marcas.index')->with('success', $meesege);
     }
 }

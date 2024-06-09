@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Http\Controllers\UpdateMarcaRequet;
+use App\Http\Controllers\UpdateNarcaRequet;
 
 class UpdateMarcaRequest extends FormRequest
 {
@@ -25,8 +25,8 @@ class UpdateMarcaRequest extends FormRequest
         $marca = $this->route('marca');
         $caracteristicaId = $marca->caracteristica->id;
         return [
-            'nombre' => 'required|string|max:60|unique:caracteristicas,nombre'. $caracteristicaId,
-            'descripcion' => 'nullable|string|max:255',
+            'nombre' => 'required|string|max:60|unique:caracteristicas,nombre,'. $caracteristicaId,
+            'descripcion' => 'string|max:255|nullable',
         ];
     }
 }

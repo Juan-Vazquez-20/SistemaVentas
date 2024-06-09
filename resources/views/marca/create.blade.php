@@ -1,6 +1,6 @@
 @extends('template')
 
-@section('title','Crear Marca')
+@section('title','Crear marca')
     
 @push('css')
 <style>
@@ -12,11 +12,11 @@
 
 @section('content')
 <div class="container-fluid px-4">
-    <h1 class="mt-4 text-center">Crear Marca</h1>
+    <h1 class="mt-4 text-center">Crear marca</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="{{ route('panel')}}">Inicio</a></li>
-        <li class="breadcrumb-item"><a href="{{route('marcas.index')}}">Marcas</a></li>
-        <li class="breadcrumb-item active">Crear Marca</li>
+        <li class="breadcrumb-item"><a href="{{route('marcas.index')}}">marcas</a></li>
+        <li class="breadcrumb-item active">Crear marca</li>
     </ol>
     <div class="conteiner w-100 border border-3 border-primary rounded p-4 mt-3">
         <form action="{{ route('marcas.store')}}" method="post">

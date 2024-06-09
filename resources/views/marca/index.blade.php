@@ -1,6 +1,6 @@
 @extends('template')
 
-@section('title', 'Marca')
+@section('title', 'marca')
 
 @push('css')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -49,10 +49,10 @@
     </script>
     @endif
     <div class="container-fluid px-4">
-        <h1 class="mt-4 text-center">Marcas</h1>
+        <h1 class="mt-4 text-center">marca</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="{{ route('panel')}}">Inicio</a></li>
-            <li class="breadcrumb-item active">Marcas</li>
+            <li class="breadcrumb-item active">marcas</li>
         </ol>
         <div class="mb-4">
         <a href="{{route('marcas.create')}}">
@@ -62,7 +62,7 @@
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>
-                Tabla Marcas
+                Tabla marca
             </div>
             <div class="card-body">
                 <table id="datatablesSimple" class="table table-striped">
@@ -72,6 +72,7 @@
                             <th>Descripcion</th>
                             <th>Estado</th>
                             <th>Acciones</th>
+                            </tr> <!-- Add this line to close the <tr> tag -->
                     </thead>
                     <tbody class="table-group-divider">
                         @foreach($marcas as $marca)
@@ -88,11 +89,11 @@
                                     @else
                                         <span class="badge bg-danger">Inactivo</span>
                                     @endif
-
+                    
                                 </td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-
+                    
                                         <form action="{{ route('marcas.edit',['marca'=>$marca])}}" method="GET">
                                             @csrf
                                             <button type="submit" class="btn btn-warning">Editar</button>
